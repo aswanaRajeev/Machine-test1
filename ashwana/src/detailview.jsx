@@ -22,8 +22,10 @@ const DetailViewPage = () => {
 
   return (
     <div className="detail-container">
+      <div className="card">
       <h2>{post.title}</h2>
       <p>{post.body}</p>
+      </div>
     </div>
   );
 };
