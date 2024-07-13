@@ -1,13 +1,31 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom'
 
+const DetailViewPage = () => {
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
 
-const DetailView = () => {
-    return (
-        <div className="card">
-          <h1>id-1</h1>
-          <h2>Lorem ipsum dolor sit amet.</h2>
-          <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia ex ullam a quam praesentium fuga pariatur quas cumque illum? Iste.</h3>
-        </div>
-      )
-    }
+  useEffect(() => {
+    axios.get(`https://jsonplaceholder.typicode.com/posts/1`)
+      .then(response => {
+        setPost(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, [id]);
 
-export default DetailView
+  if (!post) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div className="detail-container">
+      <h2>{post.title}</h2>
+      <p>{post.body}</p>
+    </div>
+  );
+};
+
+export default DetailViewPage;
